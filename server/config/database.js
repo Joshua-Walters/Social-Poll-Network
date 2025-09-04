@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+// const { MongoMemoryServer } = require('mongodb-memory-server');
 
 class DatabaseConfig {
   constructor() {
