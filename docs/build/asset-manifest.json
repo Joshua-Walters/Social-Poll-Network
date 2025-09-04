@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/repo-name/static/css/main.8f9b3475.css",
-    "main.js": "/repo-name/static/js/main.03190f3c.js",
-    "index.html": "/repo-name/index.html",
-    "main.8f9b3475.css.map": "/repo-name/static/css/main.8f9b3475.css.map",
-    "main.03190f3c.js.map": "/repo-name/static/js/main.03190f3c.js.map"
+    "main.css": "/Social-Poll-Network/static/css/main.8f9b3475.css",
+    "main.js": "/Social-Poll-Network/static/js/main.03190f3c.js",
+    "index.html": "/Social-Poll-Network/index.html",
+    "main.8f9b3475.css.map": "/Social-Poll-Network/static/css/main.8f9b3475.css.map",
+    "main.03190f3c.js.map": "/Social-Poll-Network/static/js/main.03190f3c.js.map"
   },
   "entrypoints": [
     "static/css/main.8f9b3475.css",
