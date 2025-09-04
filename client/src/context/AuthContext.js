@@ -1,9 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { loginUser, registerUser, getCurrentUser } from '../api';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
+
+// Set up Axios instance with base URL from env
+const API = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
+});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -16,8 +21,10 @@ export const AuthProvider = ({ children }) => {
     const loadUser = async () => {
       try {
         if (token) {
-          const userData = await getCurrentUser();
-          setUser(userData);
+          const res = await API.get('/api/auth/me', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUser(res.data);
         }
       } catch (err) {
         console.error('Error loading user:', err);
@@ -27,7 +34,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
     loadUser();
   }, [token]);
 
@@ -35,11 +41,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       setError(null);
-      const data = await loginUser(credentials);
-      localStorage.setItem('token', data.token);
-      setToken(data.token);
-      setUser(data);
-      return data;
+      const res = await API.post('/api/auth/login', credentials);
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
+      setUser(res.data);
+      return res.data;
     } catch (err) {
       console.error('Login error:', err);
       setError(err.response?.data?.message || 'Login failed');
@@ -51,11 +57,11 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       setError(null);
-      const data = await registerUser(userData);
-      localStorage.setItem('token', data.token);
-      setToken(data.token);
-      setUser(data);
-      return data;
+      const res = await API.post('/api/auth/register', userData);
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
+      setUser(res.data);
+      return res.data;
     } catch (err) {
       console.error('Registration error:', err);
       setError(err.response?.data?.message || 'Registration failed');
@@ -70,7 +76,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  // Update user context (e.g., after profile update)
   const updateUserContext = (updatedUser) => {
     setUser((prev) => ({ ...prev, ...updatedUser }));
   };
