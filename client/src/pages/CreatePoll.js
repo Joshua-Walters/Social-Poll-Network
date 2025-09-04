@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPoll } from '../api';
+import { createPoll, uploadPollImage } from '../api';
 import { toast } from 'react-toastify';
-import { FaPlus, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaImage, FaTimes } from 'react-icons/fa';
+import './CreatePoll.css';
 
 const CreatePoll = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     question: '',
+    description: '',
     options: ['', ''],
     isAnonymous: false,
     tags: [],
     visibility: 'public',
     expiresAt: '',
+    image: null,
   });
   const [tagInput, setTagInput] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -73,6 +78,40 @@ const CreatePoll = () => {
     });
   };
 
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size should be less than 5MB');
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const result = await uploadPollImage(file);
+      setFormData({ ...formData, image: result.imageUrl });
+      setImagePreview(result.imageUrl);
+      toast.success('Image uploaded successfully!');
+    } catch (error) {
+      toast.error('Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const removeImage = () => {
+    setFormData({ ...formData, image: null });
+    setImagePreview(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -119,6 +158,64 @@ const CreatePoll = () => {
             <p className="character-count">
               {formData.question.length}/300 characters
             </p>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="description">Description (Optional)</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Add more context to your poll..."
+              rows="2"
+              maxLength="500"
+            />
+            <p className="character-count">
+              {formData.description.length}/500 characters
+            </p>
+          </div>
+
+          <div className="form-group">
+            <label>Poll Image (Optional)</label>
+            <div className="image-upload-section">
+              {!imagePreview ? (
+                <div className="image-upload-area">
+                  <input
+                    type="file"
+                    id="poll-image-input"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploadingImage}
+                    style={{ display: 'none' }}
+                  />
+                  <label htmlFor="poll-image-input" className="image-upload-button">
+                    {uploadingImage ? (
+                      <div className="upload-spinner"></div>
+                    ) : (
+                      <>
+                        <FaImage />
+                        <span>Add Image</span>
+                      </>
+                    )}
+                  </label>
+                </div>
+              ) : (
+                <div className="image-preview">
+                  <img 
+                    src={`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${imagePreview}`} 
+                    alt="Poll" 
+                  />
+                  <button 
+                    type="button" 
+                    className="remove-image-btn"
+                    onClick={removeImage}
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="form-group">

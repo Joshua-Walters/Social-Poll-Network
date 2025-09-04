@@ -30,9 +30,20 @@ const PollCard = ({ poll }) => {
 
       <Link to={`/polls/${poll._id}`} className="poll-card-content">
         <h3 className="poll-question">{poll.question}</h3>
+        {poll.description && (
+          <p className="poll-description">{poll.description}</p>
+        )}
+        {poll.image && (
+          <div className="poll-image">
+            <img 
+              src={`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${poll.image}`}
+              alt="Poll"
+            />
+          </div>
+        )}
         <div className="poll-tags">
           {poll.tags.map(tag => (
-            <span key={tag} className="poll-tag">{tag}</span>
+            <span key={tag} className="poll-tag">#{tag}</span>
           ))}
         </div>
       </Link>

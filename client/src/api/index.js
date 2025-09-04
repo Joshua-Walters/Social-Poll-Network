@@ -72,6 +72,31 @@ export const updateUserProfile = async (profileData) => {
   return response.data;
 };
 
+// Upload API calls
+export const uploadProfilePicture = async (file) => {
+  const formData = new FormData();
+  formData.append('profilePicture', file);
+  
+  const response = await api.post('/upload/profile-picture', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
+export const uploadPollImage = async (file) => {
+  const formData = new FormData();
+  formData.append('pollImage', file);
+  
+  const response = await api.post('/upload/poll-image', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
 export const sendFriendRequest = async (userId) => {
   const response = await api.post(`/users/${userId}/friend-request`);
   return response.data;

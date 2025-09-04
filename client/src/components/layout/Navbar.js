@@ -94,6 +94,11 @@ const Navbar = () => {
                 <span className="nav-text">Home</span>
               </Link>
               
+              <Link to="/discover" className="navbar-link">
+                <FaSearch />
+                <span className="nav-text">Discover</span>
+              </Link>
+              
               <Link to="/create-poll" className="navbar-link">
                 <FaPlusCircle />
                 <span className="nav-text">New Poll</span>

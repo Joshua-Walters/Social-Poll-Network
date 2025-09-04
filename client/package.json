@@ -20,8 +20,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,12 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
-}
-{
+  },
   "homepage": "https://yourusername.github.io/repo-name",
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }

@@ -1,0 +1,36 @@
+name: social-poll-network
+services:
+- name: api
+  source_dir: server
+  github:
+    repo: Joshua-Walters/Social-Poll-Network
+    branch: main
+  run_command: npm start
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: MONGODB_URI
+    value: ${DATABASE_URL}
+  - key: JWT_SECRET
+    value: ${JWT_SECRET}
+  - key: PORT
+    value: "5000"
+
+- name: web
+  source_dir: client
+  github:
+    repo: Joshua-Walters/Social-Poll-Network
+    branch: main
+  build_command: npm run build
+  output_dir: build
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+
+databases:
+- name: social-poll-db
+  engine: MONGODB
+  version: "5"

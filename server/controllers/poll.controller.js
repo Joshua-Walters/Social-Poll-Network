@@ -7,20 +7,23 @@ const Notification = require('../models/Notification.model');
 // @access  Private
 exports.createPoll = async (req, res) => {
   try {
-    const { question, options, isAnonymous, tags, expiresAt, visibility } = req.body;
+    const { question, description, options, isAnonymous, tags, expiresAt, visibility, image } = req.body;
 
     if (!question || !options || options.length < 2) {
       return res.status(400).json({ message: 'Question and at least two options are required' });
     }
 
     const formattedOptions = options.map(option => ({
-      text: option,
+      text: option.text || option,
+      image: option.image || null,
       votes: [],
     }));
 
     const poll = await Poll.create({
       author: req.user._id,
       question,
+      description: description || null,
+      image: image || null,
       options: formattedOptions,
       isAnonymous: isAnonymous || false,
       tags: tags || [],
