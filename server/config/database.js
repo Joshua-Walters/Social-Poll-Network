@@ -1,30 +1,19 @@
 const mongoose = require('mongoose');
-// const { MongoMemoryServer } = require('mongodb-memory-server');
 
 class DatabaseConfig {
-  constructor() {
-    this.mongoServer = null;
-  }
-
   async connect() {
     try {
       let mongoUri;
-      
+
       if (process.env.NODE_ENV === 'production') {
         // Use production MongoDB URI
         mongoUri = process.env.MONGODB_URI;
         if (!mongoUri) {
           throw new Error('MONGODB_URI is required in production');
         }
-      } else if (process.env.MONGODB_URI && process.env.MONGODB_URI !== 'mongodb://localhost:27017/social-poll-platform') {
-        // Use provided MongoDB URI (e.g., Atlas)
-        mongoUri = process.env.MONGODB_URI;
       } else {
-        // Use in-memory MongoDB for development
-        console.log('Starting in-memory MongoDB for development...');
-        this.mongoServer = await MongoMemoryServer.create();
-        mongoUri = this.mongoServer.getUri();
-        console.log('In-memory MongoDB started at:', mongoUri);
+        // Use local MongoDB for development if provided, else default
+        mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/social-poll-platform';
       }
 
       await mongoose.connect(mongoUri, {
@@ -32,7 +21,7 @@ class DatabaseConfig {
         useUnifiedTopology: true,
       });
 
-      console.log('MongoDB connected successfully');
+      console.log('MongoDB connected successfully at', mongoUri);
       return true;
     } catch (error) {
       console.error('MongoDB connection error:', error);
@@ -43,10 +32,7 @@ class DatabaseConfig {
   async disconnect() {
     try {
       await mongoose.disconnect();
-      if (this.mongoServer) {
-        await this.mongoServer.stop();
-        console.log('In-memory MongoDB stopped');
-      }
+      console.log('MongoDB disconnected');
     } catch (error) {
       console.error('MongoDB disconnection error:', error);
     }
