@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import CreatePoll from './pages/CreatePoll';
 import PollDetail from './pages/PollDetail';
 import UserProfile from './pages/UserProfile';
+import Discover from './pages/Discover';
 import NotFound from './pages/NotFound';
 
 // Components
@@ -64,6 +65,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <PollDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/discover"
+            element={
+              <ProtectedRoute>
+                <Discover />
               </ProtectedRoute>
             }
           />

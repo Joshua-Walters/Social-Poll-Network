@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaEdit, FaUser, FaLock } from 'react-icons/fa';
 import PollCard from '../components/polls/PollCard';
+import ProfilePictureUpload from '../components/common/ProfilePictureUpload';
 
 const Profile = () => {
   const { user, updateUserContext } = useAuth();
@@ -59,6 +60,10 @@ const Profile = () => {
     }
   };
 
+  const handleProfilePictureUpdate = (updatedUser) => {
+    updateUserContext(updatedUser);
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -72,9 +77,9 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-header">
         <div className="profile-avatar">
-          <img 
-            src={user.profilePicture || `https://ui-avatars.com/api/?name=${user.fullName}&background=random&size=200`} 
-            alt={user.username} 
+          <ProfilePictureUpload
+            currentImage={user.profilePicture}
+            onUploadSuccess={handleProfilePictureUpdate}
           />
         </div>
         

@@ -1,7 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
+const database = require('./config/database');
 require('dotenv').config();
 
 // Import routes
@@ -9,6 +10,7 @@ const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const pollRoutes = require('./routes/poll.routes');
 const commentRoutes = require('./routes/comment.routes');
+const uploadRoutes = require('./routes/upload.routes');
 
 // Initialize express app
 const app = express();
@@ -18,20 +20,18 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// Serve static files for uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/social-poll-platform', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.error('MongoDB connection error:', err));
+database.connect();
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/polls', pollRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Base route
 app.get('/', (req, res) => {
@@ -42,6 +42,13 @@ app.get('/', (req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send({ message: 'Something went wrong!', error: err.message });
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('\nShutting down gracefully...');
+  await database.disconnect();
+  process.exit(0);
 });
 
 // Start server

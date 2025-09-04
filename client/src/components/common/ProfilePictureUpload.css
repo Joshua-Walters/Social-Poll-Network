@@ -1,0 +1,108 @@
+.profile-picture-upload {
+  position: relative;
+  display: inline-block;
+}
+
+.image-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #e1e8ed;
+  transition: border-color 0.3s ease;
+}
+
+.image-container:hover {
+  border-color: #1da1f2;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.image-container:hover .upload-overlay {
+  opacity: 1;
+}
+
+.upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.upload-button svg {
+  font-size: 24px;
+}
+
+.upload-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ffffff33;
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.upload-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: #1da1f2;
+  font-size: 14px;
+  justify-content: center;
+}
+
+.upload-progress svg {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .upload-button {
+    font-size: 12px;
+  }
+  
+  .upload-button svg {
+    font-size: 20px;
+  }
+}

@@ -13,12 +13,23 @@ const PollSchema = new mongoose.Schema(
       trim: true,
       maxlength: 300,
     },
+    description: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+    },
+    image: {
+      type: String, // URL to uploaded image
+    },
     options: [
       {
         text: {
           type: String,
           required: true,
           trim: true,
+        },
+        image: {
+          type: String, // URL to option image
         },
         votes: [
           {

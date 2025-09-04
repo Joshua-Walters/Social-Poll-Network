@@ -1,0 +1,260 @@
+.search-discovery {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.search-header h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+  font-size: 1.8rem;
+}
+
+.search-header p {
+  color: #657786;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #657786;
+  font-size: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  border: 2px solid #e1e8ed;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #1da1f2;
+  box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.1);
+}
+
+.search-filters {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 20px;
+  background: white;
+  color: #657786;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  border-color: #1da1f2;
+  color: #1da1f2;
+}
+
+.filter-btn.active {
+  background: #1da1f2;
+  border-color: #1da1f2;
+  color: white;
+}
+
+.search-loading {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.search-loading .loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e1e8ed;
+  border-top: 3px solid #1da1f2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+.search-results {
+  margin-top: 30px;
+}
+
+.results-header h3 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  margin: 0 0 20px 0;
+}
+
+.results-section {
+  margin-bottom: 40px;
+}
+
+.results-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f4f8;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.polls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tag-result {
+  background: #f0f4f8;
+  color: #1da1f2;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.tag-result:hover {
+  background: #1da1f2;
+  color: white;
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: #657786;
+}
+
+.no-results p {
+  margin: 0 0 8px 0;
+}
+
+.discovery-content {
+  margin-top: 40px;
+}
+
+.trending-section,
+.popular-section {
+  margin-bottom: 40px;
+}
+
+.trending-section h3,
+.popular-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1a1a1a;
+  font-size: 1.4rem;
+  margin: 0 0 20px 0;
+}
+
+.trending-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.trending-tag {
+  background: linear-gradient(135deg, #1da1f2, #1991db);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(29, 161, 242, 0.2);
+}
+
+.trending-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+.popular-polls {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .search-discovery {
+    padding: 16px;
+  }
+  
+  .search-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .search-filters {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  
+  .filter-btn {
+    white-space: nowrap;
+  }
+  
+  .users-grid,
+  .polls-grid,
+  .popular-polls {
+    grid-template-columns: 1fr;
+  }
+  
+  .trending-tags {
+    justify-content: center;
+  }
+}

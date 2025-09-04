@@ -1,0 +1,45 @@
+# Deployment Files
+.env
+.env.local
+.env.production
+.env.development
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production Build
+/client/build
+/server/dist
+
+# Uploads
+/server/uploads/*
+!/server/uploads/.gitkeep
+
+# Logs
+logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Temporary
+.tmp/
+.temp/

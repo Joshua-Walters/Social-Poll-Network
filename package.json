@@ -1,0 +1,22 @@
+{
+  "name": "social-poll-network",
+  "version": "1.0.0",
+  "description": "A modern social polling platform",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "start": "npm run server:start",
+    "build": "npm run client:build",
+    "server:dev": "cd server && npm run dev",
+    "server:start": "cd server && npm start",
+    "client:dev": "cd client && npm start",
+    "client:build": "cd client && npm run build",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "deploy:heroku": "npm run client:build && git add . && git commit -m \"Deploy to Heroku\" && git push heroku main"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
